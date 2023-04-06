@@ -76,3 +76,83 @@ add constraint professores_mes_niver_ck
 add prof_cep char(9);
 
 desc professores;
+
+use  bancodb_licomp_231;
+alter table parceiros rename clientes;
+
+insert into clientes(nome, email)
+values('Pedro', 'comecaP@gmail.com');
+
+insert into clientes
+values(2, 'Ana', 'ana@gmail.com', null, null);
+
+insert into clientes(nome, email)
+values('Maria', 'teste@email.com');
+
+insert into clientes(nome, email)
+values('Letícia', 'teste@email.com'),
+('Zico', 'zico@email.com');
+
+update clientes
+set email = 'teste@email.com';
+
+update clientes
+set email = 'zico@email.com'
+where id = 5;
+
+update clientes
+set email = 'ana@gmail.com'
+where nome like 'ana';
+
+insert into clientes(nome, email)
+values('Paulo', '.');
+
+select * from clientes;
+
+update clientes
+set email = 'comecaP@gmail.com'
+where nome like 'p%';
+
+select * from clientes;
+
+-- modifique a tabela clientes de modo a atender as especificações a seguir:
+-- altere o dia do aniversário de todos os clientes cujo id seja superior a 3 para 7
+update clientes
+set dia_niver = 7
+where id > 3;
+-- altere o mes aniversário de todos os clientes que possuem a letra E em seu nome para 10
+update clientes
+set mes_niver = 10
+where nome like '%e%';
+-- altere o dia e mês de aniversário de todos os clientes que tenham o nome iniciado em A ou Z para dia: 14 e mês 04
+update clientes
+set dia_niver = 14, mes_niver = 4
+where nome like 'A%' or nome like 'Z%';
+-- liste o conteúdo da tabela
+
+create table bancos(
+    numero int not null,
+    nome varchar(100) not null,
+    constraint bancos_pk primary key(numero)
+);
+
+create table agencias(
+    numero varchar(100) not null,
+    nome varchar(100) not null,
+    telefone int not null,
+    banco int not null,
+    constraint agencias_pk primary key (numero)
+);
+
+alter table bancos
+add constraint bancos_nome_uq unique(nome);
+
+alter table agencias
+add constraint agencias_nome_uq unique(nome),
+add constraint agencias_telefone_uq unique(telefone),
+add constraint agencias_banco_fk
+    foreign key(banco) references bancos(numero);
+
+-- alterar o campo numero da tabela agências para integer
+alter table agencias
+modify numero int;
