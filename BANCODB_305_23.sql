@@ -14,9 +14,6 @@ alter table clientes
 add dia_niver int,
 add mes_niver int;
 
--- para excluir uma coluna
-alter table clientes 
-drop  dia_niver;
 
 alter table clientes
 add constraint clientes_dia_niver_ck check(dia_niver >= 1 and dia_niver <= 31),
@@ -31,4 +28,20 @@ change uf estado char(2);
 alter table clientes
 drop estado;
 
-alter table clientes rename parceiros;
+alter table clientes
+rename parceiros;
+
+-- fixação - correção
+create database academico_305_23;
+
+use academico_305_23;
+
+create table instituicoes(
+    id integer not null,
+    constraint instituicoes_pk 
+        primary key(id),
+    nome varchar(100) not null,
+    email varchar(100) not null,
+    constraint instituicoes_email_uq
+        unique(email)
+);
